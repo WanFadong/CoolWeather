@@ -6,6 +6,7 @@ import java.util.List;
 import com.somewan.coolweather.model.City;
 import com.somewan.coolweather.model.County;
 import com.somewan.coolweather.model.County;
+import com.somewan.coolweather.model.Province;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -46,7 +47,7 @@ public class CoolWeatherDB {
 	/**
 	 * 将省信息存入数据库
 	 */
-	public void saveProvince(County province) {
+	public void saveProvince(Province province) {
 		if (province != null) {
 			ContentValues values = new ContentValues();
 			values.put("code", province.getCode());
@@ -60,13 +61,13 @@ public class CoolWeatherDB {
 	 * 
 	 * @return
 	 */
-	public List<County> loadProvince() {
-		List<County> provinceList = new ArrayList<County>();
+	public List<Province> loadProvince() {
+		List<Province> provinceList = new ArrayList<Province>();
 		Cursor cursor = db
 				.query("province", null, null, null, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
-				County province = new County();
+				Province province = new Province();
 				province.setId(cursor.getInt(cursor.getColumnIndex("id")));
 				province.setCode(cursor.getString(cursor.getColumnIndex("code")));
 				province.setName(cursor.getString(cursor.getColumnIndex("name")));
@@ -99,7 +100,7 @@ public class CoolWeatherDB {
 	 */
 	public List<City> loadCity(int provinceId) {
 		List<City> cityList = new ArrayList<City>();
-		Cursor cursor = db.query("province", null, "province_id=?",
+		Cursor cursor = db.query("city", null, "province_id=?",
 				new String[] { String.valueOf(provinceId) }, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
